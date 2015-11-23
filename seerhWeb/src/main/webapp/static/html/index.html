@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>index.html</title>
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="../js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript">
+    	function shiro() {
+    		$.ajax({
+                url: "http://localhost:8888/seerhWeb/test",
+                type: "post",
+                data:{name:"name"},
+                success: function(data) {
+                    alert(data);
+                }
+            });
+    	}
+    	function casJsonp() {
+    		jQuery.ajax({
+    			type: "post",
+    			url: "http://cas.seerh.com:8080/cas/retrieveUsername",
+    			dataType: "jsonp",
+    			jsonp: "callback",
+    	        jsonpCallback:"jsonpResponse",
+    			success: function(result){
+    				alert(result.id);
+    			}
+    		});
+    	}
+    </script>
+  </head>
+  
+  <body>
+    <input type="button" value="shiro" onclick="shiro()" />
+    <input type="button" value="casJsonp" onclick="casJsonp()" />
+  </body>
+</html>
