@@ -1,11 +1,17 @@
 package com.seerh.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeoutException;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import net.rubyeye.xmemcached.MemcachedClient;
+import net.rubyeye.xmemcached.exception.MemcachedException;
+
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +26,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Resource(name="memcachedClient")
+	private MemcachedClient memcachedClient;
 	
 	/*@RequiresRoles(value={"admin", "user"}, logical=Logical.OR)
 	@RequiresPermissions("store:view") */
@@ -47,7 +56,21 @@ public class UserController {
     
     @ResponseBody
     @RequestMapping(value="/test")  
-    public String test(HttpServletRequest request, String name){  
+    public String test(HttpServletRequest request, String name) throws TimeoutException, InterruptedException, MemcachedException{
+    	List<User> list = new ArrayList<>();
+    	User user = new User();
+    	user.setId(1L);
+    	user.setNickName("admin");
+    	list.add(user);
+    	user = new User();
+    	user.setId(2L);
+    	user.setNickName("user");
+    	list.add(user);
+    	this.memcachedClient.set("user", 3000, list);
+    	List<User> userList = memcachedClient.get("user");
+    	for(User u : userList) {
+    		System.out.println(u.getNickName());
+    	}
         return name;  
     } 
     

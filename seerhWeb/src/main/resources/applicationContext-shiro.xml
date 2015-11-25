@@ -69,6 +69,7 @@
             <value>  
             	/casFailure.jsp = anon
             	/static/** = anon
+            	/test = anon
             	/cas = cas
 	            /admin/userList = roles[admin]
 	            /mydemo/getUserInfo = roles[user]

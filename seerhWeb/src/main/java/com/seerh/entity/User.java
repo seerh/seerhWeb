@@ -1,9 +1,13 @@
 package com.seerh.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
-    private Long id;
+public class User implements Serializable {
+	
+	private static final long serialVersionUID = -4456871625079992793L;
+
+	private Long id;
 
     private String userName;
 

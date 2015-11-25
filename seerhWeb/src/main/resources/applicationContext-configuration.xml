@@ -14,10 +14,10 @@
          http://www.springframework.org/schema/cache 
          http://www.springframework.org/schema/cache/spring-cache.xsd">
          
-	<!-- 自动对标注 @Autowired 的 Bean 进行注入 -->     
-  	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
   	<aop:aspectj-autoproxy />
   	
   	<context:component-scan base-package="com.seerh.service" />
   	<context:component-scan base-package="com.seerh.realm" />
+  	
+  	<import resource="xmemcached.xml" />
 </beans>
